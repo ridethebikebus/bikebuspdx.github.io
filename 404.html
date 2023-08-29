@@ -2,8 +2,21 @@
 <html>
 <meta charset="utf-8"></meta>
 <body>
-  <script type="text/javascript">
-    console.log(window.location);
+  <div id="404-text"></div>
+  <script>
+    async function redirect() {
+      const response = await fetch("/redirects.json").then(r => r.json());
+      const redirects = await response.json();
+      const path = window.location.pathname;
+
+      if (redirects[path]) {
+        window.location.href = redirects[path];
+      } else {
+        document.getElementById("404-text").innerHTML = "404 Error: Not Found"
+      }
+    }
+
+    redirect();
   </script>
 </body>
 </html>
